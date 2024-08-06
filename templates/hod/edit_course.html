@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block head %}
+    <style>
+        #profupdate{
+            margin: 0 auto;
+        }
+    </style>
+{% endblock %}
+{% block body %}
+<div class="row">
+    <div class="col-sm-12">
+      <div class="card">
+        <div class="card-body row justify-content-center">
+          <form method="post" action="{% url 'update_course' %}">
+              {% csrf_token %}
+            <div class="col-12">
+              <h5 class="form-title text-center"><span>Edit Course</span></h5>
+            </div>
+            <!--Added Messsages  -->
+            {% include 'includes/messages.html' %}
+
+            <div class="col-12 col-sm-6" id="profupdate">
+              <div class="form-group">
+                <label>Course Name</label>
+                <input type="text" class="form-control" name="course_name" value="{{course.name}}" required/>
+                <input type="text" class="form-control" name="course_id" value="{{course.id}}" hidden/>
+              </div>
+            </div>
+            
+            <div class="col-12 text-center">
+              <button type="submit" class="btn btn-primary">Update Course</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
