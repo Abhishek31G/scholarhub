@@ -1,0 +1,2 @@
+# scholarhub
+School Management System
