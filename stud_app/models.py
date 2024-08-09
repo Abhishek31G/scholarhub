@@ -1,3 +1,4 @@
+from django.utils import timezone
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
@@ -50,3 +51,19 @@ class Staff(models.Model):
 
     def __str__(self) -> str:
         return self.admin.username
+    
+class Subject(models.Model):
+    name = models.CharField(max_length=100)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    staff = models.ForeignKey(Staff, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(default=timezone.now)
+    updated_at = models.DateTimeField(default=timezone.now)
+
+    def __str__(self) -> str:
+        return self.name
+
+    def save(self, *args, **kwargs):
+        if not self.id:  # If the record is being created for the first time
+            self.created_at = timezone.now()
+        self.updated_at = timezone.now()
+        super().save(*args, **kwargs)

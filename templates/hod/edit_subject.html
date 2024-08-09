@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block head %}
+    <style>
+        #profupdate{
+            margin: 0 auto;
+        }
+    </style>
+{% endblock %}
+{% block body %}
+<div class="row">
+    <div class="col-sm-12">
+      <div class="card">
+        <div class="card-body row justify-content-center">
+          <form method="post" action="{% url 'update_subject' %}">
+              {% csrf_token %}
+            <div class="col-12">
+              <h5 class="form-title text-center"><span> Edit Subject</span></h5>
+            </div>
+            <!--Added Messsages  -->
+            {% include 'includes/messages.html' %}
+
+            <div class="col-12 col-sm-6" id="profupdate">
+              <div class="form-group">
+                <label>Subject Name</label>
+                <input type="text" class="form-control" name="subject_name"  value="{{subject.name}}" required/>
+                <input type="text" class="form-control" name="subject_id"  value="{{subject.id}}" required hidden/>
+              </div>
+            </div>
+            <div class="col-12 col-sm-6" id="profupdate">
+                <div class="form-group">
+                    <label>Course</label>
+                    <select class="form-control form-select" name="course_id" value="{{subject.course.name}}" required>
+                        <option>Select Course</option>
+                    {% for i in course %}
+                       <option value="{{i.id}}" {% for s in subj_filtr %}{% if s.course.id == i.id %}selected{% endif %}{% endfor %}>{{i.name}}</option>
+                    {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="col-12 col-sm-6" id="profupdate">
+                <div class="form-group">
+                    <label>Staff</label>
+                    <select class="form-control form-select" name="staff_id" value="{{subject.staff.admin.first_name}} {{subject.staff.admin.last_name}}" required>
+                        <option>Select Staff</option>
+                    {% for i in staff %}
+                       <option value="{{i.id}}" {% for s in subj_filtr %}{% if s.staff.id == i.id %}selected{% endif %}{% endfor %}>{{i.admin.first_name}} {{i.admin.last_name}}</option>
+                    {% endfor %}
+                    </select>
+                </div>
+            </div>
+            
+            <div class="col-12 text-center">
+              <button type="submit" class="btn btn-primary">Update Subject</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
