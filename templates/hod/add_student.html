@@ -7,6 +7,17 @@
     </style>
 {% endblock %}
 {% block body %}
+<div class="page-header">
+  <div class="row align-items-center">
+     <div class="col">
+        <h3 class="page-title">Add Student</h3>
+        <ul class="breadcrumb">
+           <li class="breadcrumb-item"><a href="students.html">Students</a></li>
+           <li class="breadcrumb-item active">Add Student</li>
+        </ul>
+     </div>
+  </div>
+</div>
 <div class="row">
     <div class="col-sm-12">
       <div class="card">
@@ -14,7 +25,7 @@
           <form enctype="multipart/form-data" method="post" action="{% url 'add_student' %}">
               {% csrf_token %}
             <div class="col-12">
-              <h5 class="form-title text-center"><span>Add Student</span></h5>
+              <h5 class="form-title text-center"><span>Student Information</span></h5>
             </div>
             <!--Added Messsages  -->
             {% include 'includes/messages.html' %}

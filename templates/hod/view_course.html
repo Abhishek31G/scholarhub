@@ -4,16 +4,16 @@
     <div class="page-header">
        <div class="row align-items-center">
           <div class="col">
-             <h3 class="page-title">Courses</h3>
+             <h3 class="page-title">Course Details</h3>
              <ul class="breadcrumb">
-                <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-                <li class="breadcrumb-item active">Courses</li>
+                <li class="breadcrumb-item"><a href="index.html">Courses</a></li>
+                <li class="breadcrumb-item active"> Course Details</li>
              </ul>
           </div>
           <div class="col-auto text-right float-right ml-auto">
-             <a href="#" class="btn btn-outline-primary mr-2"><i class="fas fa-download"></i> Download</a>
-             <a href="add-student.html" class="btn btn-primary"><i class="fas fa-plus"></i></a>
-          </div>
+            <!-- <a href="#" class="btn btn-outline-primary mr-2"><i class="fas fa-download"></i> Download</a> -->
+            <a href="{% url 'add_course' %}" class="btn btn-primary"><i class="fas fa-plus" title="Add Course"></i></a>
+         </div>
        </div>
     </div>
     

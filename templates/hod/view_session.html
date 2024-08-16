@@ -4,15 +4,15 @@
     <div class="page-header">
        <div class="row align-items-center">
           <div class="col">
-             <h3 class="page-title">Subject Details</h3>
+             <h3 class="page-title">Session Details</h3>
              <ul class="breadcrumb">
-                <li class="breadcrumb-item"><a href="index.html">Subjects</a></li>
-                <li class="breadcrumb-item active">Subject Details</li>
+                <li class="breadcrumb-item"><a href="index.html">Sessions</a></li>
+                <li class="breadcrumb-item active">Session Details</li>
              </ul>
           </div>
           <div class="col-auto text-right float-right ml-auto">
              <!-- <a href="#" class="btn btn-outline-primary mr-2"><i class="fas fa-download"></i> Download</a> -->
-             <a href="{% url 'add_subject' %}" class="btn btn-primary"><i class="fas fa-plus" title="Add Subject"></i></a>
+             <a href="{% url 'add_session' %}" class="btn btn-primary"><i class="fas fa-plus" title="Add Session"></i></a>
           </div>
        </div>
     </div>
@@ -29,29 +29,25 @@
                       <thead>
                          <tr>
                             <th>ID</th>
-                            <th class="text-center">Name</th>
-                            <th>Course</th>
-                            <th>Staff</th>
-                            <th>Created_at</th>
-                            <th>Updated_at</th>
+                            <th>Session Year Start</th>
+                            <th>Session Year</th>
+                            <th>Duration</th>
                             <th class="text-right">Action</th>
                          </tr>
                       </thead>
                       <tbody>
-                        {% for subject in subjects %}
+                        {% for session in sessions %}
                          <tr>
-                            <td>{{subject.id}}</td>
-                            <td>{{subject.name}}</td>
-                            <td>{{subject.course.name}}</td>
-                            <td>{{subject.staff.admin.first_name}} {{subject.staff.admin.last_name}}</td>
-                           <td>{{subject.created_at}}</td>
-                            <td>{{subject.updated_at}}</td>
+                            <td>{{session.id}}</td>
+                            <td>{{session.session_start}}</td>
+                            <td>{{session.session_end}}</td>
+                            <td>{{session.duration}}</td>
                             <td class="text-right">
                                <div class="actions">
-                                  <a href="{% url 'edit_subject' subject.id %}" class="btn btn-sm bg-success-light mr-2">
+                                  <a href="{% url 'edit_session' session.id %}" class="btn btn-sm bg-success-light mr-2">
                                   <i class="fas fa-pen"></i>
                                   </a>
-                                  <a href="{% url 'delete_subject' subject.id %}" class="btn btn-sm bg-danger-light">
+                                  <a href="{% url 'delete_session' session.id %}" class="btn btn-sm bg-danger-light">
                                   <i class="fas fa-trash"></i>
                                   </a>
                                </div>

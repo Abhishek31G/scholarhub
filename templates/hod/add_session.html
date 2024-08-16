@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block head %}
+    <style>
+        #profupdate{
+            margin: 0 auto;
+        }
+    </style>
+{% endblock %}
+{% block body %}
+<div class="page-header">
+    <div class="row align-items-center">
+       <div class="col">
+          <h3 class="page-title">Add Session</h3>
+          <ul class="breadcrumb">
+             <li class="breadcrumb-item"><a href="students.html">Sessions</a></li>
+             <li class="breadcrumb-item active">Add Session</li>
+          </ul>
+       </div>
+    </div>
+ </div>
+<div class="row">
+    <div class="col-sm-12">
+      <div class="card">
+        <div class="card-body row justify-content-center">
+          <form method="post" action="{% url 'add_session' %}">
+              {% csrf_token %}
+            <div class="col-12">
+              <h5 class="form-title text-center"><span> Session Information</span></h5>
+            </div>
+            <!--Added Messsages  -->
+            {% include 'includes/messages.html' %}
+
+            <div class="col-12 col-sm-6" id="profupdate">
+                <div class="form-group">
+                    <label>Session Year Start</label>
+                    <div>
+                       <input type="date" class="form-control" name="session_year_start" required>
+                    </div>
+                 </div>
+            </div>
+            <div class="col-12 col-sm-6" id="profupdate">
+                <div class="form-group">
+                    <label>Session Year End</label>
+                    <div>
+                       <input type="date" class="form-control" name="session_year_end" required>
+                    </div>
+                 </div>
+            </div>
+
+            <div class="col-12 col-sm-6" id="profupdate">
+                <div class="form-group">
+                    <label>Duration</label>
+                    <div>
+                       <input type="number" class="form-control" name="duration" required>
+                    </div>
+                 </div>
+            </div>
+            
+            <div class="col-12 text-center">
+              <button type="submit" class="btn btn-primary">Add Session</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

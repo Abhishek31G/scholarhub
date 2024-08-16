@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% block head %}
+    <style>
+        #profupdate{
+            margin: 0 auto;
+        }
+    </style>
+{% endblock %}
+{% block body %}
+<div class="page-header">
+  <div class="row align-items-center">
+     <div class="col">
+        <h3 class="page-title">Apply for Leave</h3>
+        <ul class="breadcrumb">
+           <li class="breadcrumb-item"><a href="students.html">Staffs</a></li>
+           <li class="breadcrumb-item active">Apply for Leave</li>
+        </ul>
+     </div>
+     <div class="col-auto text-right float-right ml-auto">
+        <button class="btn btn-primary mr-2" data-toggle="modal" data-target=".leave_history"><i class="<i class="fas fa-pray"></i>"></i>  Leave Status/History</button>
+     </div>
+  </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+      <div class="card">
+        <div class="card-body row justify-content-center">
+          <form method="post" action="{% url 'add_course' %}">
+              {% csrf_token %}
+            <div class="col-12">
+              <h5 class="form-title text-center"><span>Apply for Leave</span></h5>
+            </div>
+            <!--Added Messsages  -->
+            {% include 'includes/messages.html' %}
+
+            <div class="col-12 col-sm-6" id="profupdate">
+              <div class="form-group">
+                <label>Leave Start</label>
+                <input type="date" class="form-control" name="leave_start" required/>
+              </div>
+            </div>
+
+            <div class="col-12 col-sm-6" id="profupdate">
+                <div class="form-group">
+                  <label>Leave End</label>
+                  <input type="date" class="form-control" name="leave_end" required/>
+                </div>
+            </div>
+
+            <div class="col-12 col-sm-6" id="profupdate">
+                <div class="form-group">
+                  <label>Reason</label>
+                  <textarea  class="form-control" name="reason" required style="height:100px;"></textarea>
+                </div>
+            </div>
+
+            
+            <div class="col-12 text-center">
+              <button type="submit" class="btn btn-primary">Apply</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- Leave History Modal -->
+  <div class="modal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Modal title</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>Modal body text goes here.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

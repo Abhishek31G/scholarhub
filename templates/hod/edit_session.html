@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% block head %}
+    <style>
+        #profupdate{
+            margin: 0 auto;
+        }
+    </style>
+{% endblock %}
+{% block body %}
+<div class="page-header">
+    <div class="row align-items-center">
+       <div class="col">
+          <h3 class="page-title">Edit Session</h3>
+          <ul class="breadcrumb">
+             <li class="breadcrumb-item"><a href="students.html">Sessions</a></li>
+             <li class="breadcrumb-item active">Edit Session</li>
+          </ul>
+       </div>
+    </div>
+ </div>
+<div class="row">
+    <div class="col-sm-12">
+      <div class="card">
+        <div class="card-body row justify-content-center">
+          <form method="post" action="{% url 'update_session' %}">
+              {% csrf_token %}
+            <div class="col-12">
+              <h5 class="form-title text-center"><span> Session Information</span></h5>
+            </div>
+            <!--Added Messsages  -->
+            {% include 'includes/messages.html' %}
+
+            <div class="col-12 col-sm-6" id="profupdate">
+                <div class="form-group">
+                    <label>Session Year Start</label>
+                    <div>
+                       <input type="date" class="form-control" name="session_year_start" value="{% for s in session %}{{s.session_start}}{% endfor %}" required>
+                       <input type="text" class="form-control" name="session_id" value="{% for s in session %}{{s.id}}{% endfor %}" required hidden>
+                    </div>
+                 </div>
+            </div>
+            <div class="col-12 col-sm-6" id="profupdate">
+                <div class="form-group">
+                    <label>Session Year End</label>
+                    <div>
+                       <input type="date" class="form-control" name="session_year_end" value="{% for s in session %}{{s.session_end}}{% endfor %}" required>
+                    </div>
+                 </div>
+            </div>
+
+            <div class="col-12 col-sm-6" id="profupdate">
+                <div class="form-group">
+                    <label>Duration</label>
+                    <div>
+                       <input type="number" class="form-control" name="duration" value="{% for s in session %}{{s.duration}}{% endfor %}" required>
+                    </div>
+                 </div>
+            </div>
+            
+            <div class="col-12 text-center">
+              <button type="submit" class="btn btn-primary">Update Session</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

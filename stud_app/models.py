@@ -25,7 +25,7 @@ class Course(models.Model):
 class Session_Year(models.Model):
     session_start = models.CharField(max_length=100)
     session_end = models.CharField(max_length=100)
-    duration = models.IntegerField(null=True, blank=True, default=4)
+    duration = models.IntegerField(default=4)
 
     def __str__(self) -> str:
         return f"{self.session_start} to {self.session_end} duration: {self.duration}"
@@ -67,3 +67,25 @@ class Subject(models.Model):
             self.created_at = timezone.now()
         self.updated_at = timezone.now()
         super().save(*args, **kwargs)
+
+class Staff_Notification(models.Model):
+    staff_id = models.ForeignKey(Staff, on_delete=models.CASCADE)
+    message = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    status = models.IntegerField(null=True, default=0)
+
+    def __str__(self):
+        return self.staff_id.admin.first_name
+    
+
+class Staff_Leave(models.Model):
+    staff_id = models.ForeignKey(Staff, on_delete=models.CASCADE)
+    date = models.CharField(max_length=100)
+    message = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    status = models.IntegerField(null=True, default=0)
+
+    def __str__(self):
+        return f"{self.staff_id.admin.first_name} {self.staff_id.admin.last_name}"
