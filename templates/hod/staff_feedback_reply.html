@@ -1,0 +1,153 @@
+{% extends 'base.html' %}
+{% block body %}
+<div class="content container-fluid">
+    <div class="page-header">
+       <div class="row align-items-center">
+          <div class="col">
+             <h3 class="page-title"> Staff Feedback Reply</h3>
+             <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Staffs</a></li>
+                <li class="breadcrumb-item active">Staff Feedback Reply</li>
+             </ul>
+          </div>
+          <div class="col-auto text-right float-right ml-auto">
+              <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary mr-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                <i class="fas fa-eye"></i>View all Staff Feedbacks
+            </button>
+             <!-- <a href="{% url 'add_session' %}" class="btn btn-primary"><i class="fas fa-plus" title="Add Session"></i></a> -->
+          </div>
+       </div>
+    </div>
+    
+    <!-- Added Messages -->
+    {% include 'includes/messages.html' %}
+
+    <div class="row">
+        <div class="col-sm-12">
+           <div class="card card-table">
+              <div class="card-body">
+                 <div class="table-responsive">
+                    <table id="table_id" class="table table-hover table-center mb-0">
+                       <thead>
+                          <tr>
+                             <th>ID</th>
+                             <th>Staff Name</th>
+                             <th>Feedback</th>
+                             <th>Date</th>
+                             <th class="text-right">Action</th>
+                          </tr>
+                       </thead>
+                       <tbody>
+                         {% for feedback in feedbacks %}
+                          <tr>
+                             <td>{{feedback.staff_id.id}}</td>
+                             <td>
+                                <h2 class="table-avatar">
+                                   <a href="student-details.html" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="/{{feedback.staff_id.admin.profile_pic}}" alt="User Image"></a>
+                                   <a href="student-details.html">{{feedback.staff_id.admin.first_name}} {{feedback.staff_id.admin.last_name}}</a>
+                                </h2>
+                             </td>
+                             <td>{{feedback.feedback}}</td>
+                             <td>{{feedback.created_at}}</td>
+                             <td class="text-right">
+                                <div class="actions">
+                                    {% if feedback.feedback_reply == "" %}
+                                    <button style="color: white;"  type="button" title="Reply" class="btn btn-sm bg-warning mr-2" data-bs-toggle="modal" data-bs-target="#student_notification-{{forloop.counter}}">
+                                        Reply <i class="far fa-comment"></i>
+                                    </button>
+                                    {% else %}
+                                    <span class="badge text-bg-success">Replied</span><i class="fas fa-check-double"></i>
+                                    <!-- <button style="color: white;"  type="button" title="Replied" class="btn btn-sm bg-warning mr-2" data-bs-toggle="modal" data-bs-target="#student_notification-{{forloop.counter}}">
+                                        Replied <i class="far fa-comment"></i>
+                                    </button> -->
+                                    {% endif %}
+                                </div>
+                             </td>
+                          </tr>
+                         {% endfor %}
+                       </tbody>
+                    </table>
+                 </div>
+              </div>
+           </div>
+        </div>
+     </div>
+ </div>
+
+ <!-- View all Notifications Modal -->
+
+  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-sm-12">
+                   <div class="card card-table">
+                      <div class="card-body">
+                         <div class="table-responsive">
+                            <table id="table_id" class="table table-hover table-center mb-0">
+                               <thead>
+                                  <tr>
+                                     <th style="width: 60%;">Feedback</th>
+                                     <th style="width: 40%;" class="text-right">Reply</th>
+                                  </tr>
+                               </thead>
+                               <tbody>
+                                 {% for feedback in feedbacks %}
+                                  <tr>
+                                     <td>{{feedback.message}}</td>
+                                     {% if notification.status == 0 %}
+                                     <td><span class="badge text-bg-danger">Unread</span></td>
+                                     {% else %}
+                                     <td><span class="badge text-bg-success">Seen</span></td>
+                                     {% endif %}
+                                  </tr>
+                                 {% endfor %}
+                               </tbody>
+                            </table>
+                         </div>
+                      </div>
+                   </div>
+                </div>
+             </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- Notification Modal -->
+ {% for feedback in feedbacks %}
+<div class="modal fade" id="student_notification-{{forloop.counter}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="student_notification_label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="student_notification">Reply to {{feedback.staff_id.admin.first_name}} {{feedback.staff_id.admin.last_name}}</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form method="post" action="{% url 'staff_feedback_reply_save' %}">
+                {% csrf_token %}
+                <div class="mb-3">
+                  <textarea class="form-control" name="feedback_reply"></textarea>
+                  <input type="text" class="form-control" name="feedback_id" value="{{ feedback.id }}" hidden>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endfor %}
+
+{% endblock %}

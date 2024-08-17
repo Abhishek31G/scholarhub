@@ -10,14 +10,14 @@
 <div class="page-header">
   <div class="row align-items-center">
      <div class="col">
-        <h3 class="page-title">Apply for Leave</h3>
+        <h3 class="page-title">Feedback</h3>
         <ul class="breadcrumb">
            <li class="breadcrumb-item"><a href="">Staffs</a></li>
-           <li class="breadcrumb-item active">Apply for Leave</li>
+           <li class="breadcrumb-item active">Feedback</li>
         </ul>
      </div>
      <div class="col-auto text-right float-right ml-auto">
-        <button class="btn btn-primary mr-2" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fas fa-pray"></i> Leave Status/History</button>
+        <button class="btn btn-primary mr-2" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fas fa-comments"></i> Feedback Status/History</button>
      </div>
   </div>
 </div>
@@ -25,38 +25,24 @@
     <div class="col-sm-12">
       <div class="card">
         <div class="card-body row justify-content-center">
-          <form method="post" action="{% url 'staff_apply_leave_save' %}">
+          <form method="post" action="{% url 'staff_feedback_save' %}">
               {% csrf_token %}
             <div class="col-12">
-              <h5 class="form-title text-center"><span>Apply for Leave</span></h5>
+              <h5 class="form-title text-center"><span>Feedback</span></h5>
             </div>
             <!--Added Messsages  -->
             {% include 'includes/messages.html' %}
 
             <div class="col-12 col-sm-6" id="profupdate">
-              <div class="form-group">
-                <label>Leave Start</label>
-                <input type="date" class="form-control" name="leave_start" required/>
-              </div>
-            </div>
-
-            <div class="col-12 col-sm-6" id="profupdate">
                 <div class="form-group">
-                  <label>Leave End</label>
-                  <input type="date" class="form-control" name="leave_end" required/>
-                </div>
-            </div>
-
-            <div class="col-12 col-sm-6" id="profupdate">
-                <div class="form-group">
-                  <label>Reason</label>
-                  <textarea  class="form-control" name="reason" required style="height:100px;"></textarea>
+                  <label>Feedback</label>
+                  <textarea  class="form-control" name="feedback" required style="height:150px;"></textarea>
                 </div>
             </div>
 
             
             <div class="col-12 text-center">
-              <button type="submit" class="btn btn-primary">Apply</button>
+              <button type="submit" class="btn btn-primary">Send Feedback</button>
             </div>
           </form>
         </div>
@@ -70,7 +56,7 @@
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">Leave Status/History</h1>
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Feedback Status/History</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
@@ -82,24 +68,20 @@
                             <table id="table_id" class="table table-hover table-center mb-0">
                                <thead>
                                   <tr>
-                                     <th>Leave Start</th>
-                                     <th>Leave End</th>
-                                     <th>Reason</th>
-                                     <th>Status</th>
+                                     <th>Id</th>
+                                     <th>Feedback</th>
+                                     <th>Reply</th>
                                   </tr>
                                </thead>
                                <tbody>
-                                 {% for sl in staff_leave %}
+                                 {% for feedback in feedbacks %}
                                   <tr>
-                                     <td>{{sl.leave_start}}</td>
-                                     <td>{{sl.leave_end}}</td>
-                                     <td>{{sl.message}}</td>
-                                     {% if sl.status == 0 %}
-                                       <td><span class="badge text-bg-warning">Pending</span></td>
-                                     {% elif sl.status == 1 %}
-                                      <td><span class="badge text-bg-success">Approved</span></td>
+                                     <td>{{feedback.id}}</td>
+                                     <td>{{feedback.feedback}}</td>
+                                     {% if feedback.feedback_reply == "" %}
+                                       <td><span class="badge text-bg-info">No reply</span></td>
                                      {% else %}
-                                      <td><span class="badge text-bg-warning">Disapproved</span></td>
+                                      <td>{{feedback.feedback_reply}}</td>
                                      {% endif %}
                                   </tr>
                                  {% endfor %}
