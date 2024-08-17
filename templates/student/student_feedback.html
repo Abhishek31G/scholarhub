@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% block head %}
+    <style>
+        #profupdate{
+            margin: 0 auto;
+        }
+    </style>
+{% endblock %}
+{% block body %}
+<div class="page-header">
+  <div class="row align-items-center">
+     <div class="col">
+        <h3 class="page-title">Feedback</h3>
+        <ul class="breadcrumb">
+           <li class="breadcrumb-item"><a href="">Students</a></li>
+           <li class="breadcrumb-item active">Feedback</li>
+        </ul>
+     </div>
+     <div class="col-auto text-right float-right ml-auto">
+        <button class="btn btn-primary mr-2" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fas fa-comments"></i> Feedback Status/History</button>
+     </div>
+  </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+      <div class="card">
+        <div class="card-body row justify-content-center">
+          <form method="post" action="{% url 'student_feedback_save' %}">
+              {% csrf_token %}
+            <div class="col-12">
+              <h5 class="form-title text-center"><span>Feedback</span></h5>
+            </div>
+            <!--Added Messsages  -->
+            {% include 'includes/messages.html' %}
+
+            <div class="col-12 col-sm-6" id="profupdate">
+                <div class="form-group">
+                  <label>Feedback</label>
+                  <textarea  class="form-control" name="feedback" required style="height:150px;"></textarea>
+                </div>
+            </div>
+
+            
+            <div class="col-12 text-center">
+              <button type="submit" class="btn btn-primary">Send Feedback</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- Leave History Modal -->
+
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Feedback Status/History</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-sm-12">
+                   <div class="card card-table">
+                      <div class="card-body">
+                         <div class="table-responsive">
+                            <table id="table_id" class="table table-hover table-center mb-0">
+                               <thead>
+                                  <tr>
+                                     <th>Id</th>
+                                     <th>Feedback</th>
+                                     <th>Reply</th>
+                                  </tr>
+                               </thead>
+                               <tbody>
+                                 {% for feedback in feedbacks %}
+                                  <tr>
+                                     <td>{{feedback.id}}</td>
+                                     <td>{{feedback.feedback}}</td>
+                                     {% if feedback.feedback_reply == "" %}
+                                       <td><span class="badge text-bg-info">No reply</span></td>
+                                     {% else %}
+                                      <td>{{feedback.feedback_reply}}</td>
+                                     {% endif %}
+                                  </tr>
+                                 {% endfor %}
+                               </tbody>
+                            </table>
+                         </div>
+                      </div>
+                   </div>
+                </div>
+             </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

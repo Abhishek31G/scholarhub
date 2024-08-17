@@ -77,6 +77,17 @@ class Staff_Notification(models.Model):
 
     def __str__(self):
         return self.staff_id.admin.first_name
+
+
+class Student_Notification(models.Model):
+    student_id = models.ForeignKey(Student, on_delete=models.CASCADE)
+    message = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    status = models.IntegerField(null=True, default=0)
+
+    def __str__(self):
+        return self.student_id.admin.first_name
     
 
 class Staff_Leave(models.Model):
@@ -101,3 +112,14 @@ class Staff_Feedback(models.Model):
 
     def __str__(self):
         return f"{self.staff_id.admin.first_name} {self.staff_id.admin.last_name}"
+
+
+class Student_Feedback(models.Model):
+    student_id = models.ForeignKey(Student, on_delete=models.CASCADE)
+    feedback = models.TextField()
+    feedback_reply = models.TextField(blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.student_id.admin.first_name} {self.student_id.admin.last_name}"

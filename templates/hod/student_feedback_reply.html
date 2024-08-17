@@ -4,16 +4,16 @@
     <div class="page-header">
        <div class="row align-items-center">
           <div class="col">
-             <h3 class="page-title"> Staff Feedback Reply</h3>
+             <h3 class="page-title"> Student Feedback Reply</h3>
              <ul class="breadcrumb">
-                <li class="breadcrumb-item"><a href="index.html">Staffs</a></li>
-                <li class="breadcrumb-item active">Staff Feedback Reply</li>
+                <li class="breadcrumb-item"><a href="index.html">Students</a></li>
+                <li class="breadcrumb-item active">Student Feedback Reply</li>
              </ul>
           </div>
           <div class="col-auto text-right float-right ml-auto">
               <!-- Button trigger modal -->
             <button type="button" class="btn btn-primary mr-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                <i class="fas fa-eye"></i>View all Staff Feedbacks
+                <i class="fas fa-eye"></i>View all Student Feedbacks
             </button>
              <!-- <a href="{% url 'add_session' %}" class="btn btn-primary"><i class="fas fa-plus" title="Add Session"></i></a> -->
           </div>
@@ -32,7 +32,7 @@
                        <thead>
                           <tr>
                              <th>ID</th>
-                             <th>Staff Name</th>
+                             <th>Student Name</th>
                              <th>Feedback</th>
                              <th>Date</th>
                              <th class="text-right">Action</th>
@@ -41,11 +41,11 @@
                        <tbody>
                          {% for feedback in feedbacks %}
                           <tr>
-                             <td>{{feedback.staff_id.id}}</td>
+                             <td>{{feedback.student_id.id}}</td>
                              <td>
                                 <h2 class="table-avatar">
-                                   <a href="student-details.html" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="/{{feedback.staff_id.admin.profile_pic}}" alt="User Image"></a>
-                                   <a href="student-details.html">{{feedback.staff_id.admin.first_name}} {{feedback.staff_id.admin.last_name}}</a>
+                                   <a href="student-details.html" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="/{{feedback.student_id.admin.profile_pic}}" alt="User Image"></a>
+                                   <a href="student-details.html">{{feedback.student_id.admin.first_name}} {{feedback.student_id.admin.last_name}}</a>
                                 </h2>
                              </td>
                              <td>{{feedback.feedback}}</td>
@@ -58,9 +58,6 @@
                                     </button>
                                     {% else %}
                                     <span class="badge text-bg-success">Replied</span><i class="fas fa-check-double"></i>
-                                    <!-- <button style="color: white;"  type="button" title="Replied" class="btn btn-sm bg-warning mr-2" data-bs-toggle="modal" data-bs-target="#student_notification-{{forloop.counter}}">
-                                        Replied <i class="far fa-comment"></i>
-                                    </button> -->
                                     {% endif %}
                                 </div>
                              </td>
@@ -93,7 +90,7 @@
                             <table id="table_id" class="table table-hover table-center mb-0">
                                <thead>
                                   <tr>
-                                     <th style="width: 25%;">Staff Name</th>
+                                     <th style="width: 25%;">Student Name</th>
                                      <th style="width: 50%;">Feedback</th>
                                      <th style="width: 25%;">Reply</th>
                                   </tr>
@@ -101,7 +98,7 @@
                                <tbody>
                                  {% for feedback in feedbacks %}
                                   <tr>
-                                     <td>{{feedback.staff_id.admin.first_name}} {{feedback.staff_id.admin.last_name}}</td>
+                                     <td>{{feedback.student_id.admin.first_name}} {{feedback.student_id.admin.last_name}}</td>
                                      <td>{{feedback.feedback}}</td>
                                      {% if feedback.feedback_reply == "" %}
                                      <td><span class="badge text-bg-danger">Unanswered</span></td>
@@ -131,11 +128,11 @@
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="student_notification">Reply to {{feedback.staff_id.admin.first_name}} {{feedback.staff_id.admin.last_name}}</h1>
+          <h1 class="modal-title fs-5" id="student_notification">Reply to {{feedback.student_id.admin.first_name}} {{feedback.student_id.admin.last_name}}</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-            <form method="post" action="{% url 'staff_feedback_reply_save' %}">
+            <form method="post" action="{% url 'student_feedback_reply_save' %}">
                 {% csrf_token %}
                 <div class="mb-3">
                   <textarea class="form-control" name="feedback_reply"></textarea>
