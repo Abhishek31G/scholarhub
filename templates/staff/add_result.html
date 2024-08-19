@@ -1,0 +1,145 @@
+{% extends 'base.html' %} {% block head %}
+<style>
+  #profupdate {
+    margin: 0 auto;
+  }
+</style>
+{% endblock %} 
+{% block body %}
+
+<div class="content container-fluid">
+  <div class="page-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <h3 class="page-title">Add Result</h3>
+        <ul class="breadcrumb">
+          <li class="breadcrumb-item"><a href="subjects.html">Dashboard</a></li>
+          <li class="breadcrumb-item active">Add Result</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  {% include 'includes/messages.html' %} {% if action is None %}
+  <form method="post" action="?action=view_students">
+    {% csrf_token %}
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-12">
+                <h5 class="form-title"><span>Add Result</span></h5>
+              </div>
+
+              <div class="col-12 col-sm-6" id="profupdate">
+                <div class="form-group">
+                  <label>Subject</label>
+                  <select class="form-control form-select" name="subject_id" required>
+                    <option>Select Subject</option>
+                    {% for i in subjects %}
+                    <option value="{{i.id}}">{{i.name}}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+
+              <div class="col-12 col-sm-6" id="profupdate">
+                <div class="form-group">
+                  <label>Session_Year</label>
+                  <select
+                    class="form-control form-select"
+                    name="session_year_id"
+                    required
+                  >
+                    <option>Select Session_Year</option>
+                    {% for i in session_years %}
+                    <option value="{{i.id}}">
+                      {{i.session_start}} to {{i.session_end}} | Duration:
+                      {{i.duration}}
+                    </option>
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+              <div class="col-12 text-center">
+                <button type="submit" class="btn btn-primary">
+                  View Students
+                </button>
+              </div>
+            </div>
+            <hr />
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+  {% else %}
+  <form method="post" action="{% url 'staff_save_result' %}">
+    {% csrf_token %}
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-12">
+                <h5 class="form-title"><span>Add Result</span></h5>
+              </div>
+              <div class="col-12 col-sm-6" id="profupdate">
+                <div class="form-group">
+                    <label>Subject</label>
+                    <select class="form-control form-select" name="subject_id">
+                       <option value="{{get_subject.id}}">{{get_subject}}</option>
+                    </select>
+                </div>
+            </div>
+            <input type="hidden" name="subject_id" value="{{ get_subject.id }}">
+            <input type="hidden" name="session_year_id" value="{{ get_session_year.id }}">
+            <div class="col-12 col-sm-6" id="profupdate">
+                <div class="form-group">
+                    <label>Session_Year</label>
+                    <select class="form-control form-select" name="session_year_id">
+                       <option value="{{get_session_year.id}}">{{get_session_year}}</option>
+                    </select>
+                </div>
+            </div>
+
+              <div class="col-12" id="profupdate">
+                <div class="form-group">
+                  <label>Student List</label>
+                  <select class="form-control form-select" name="student_id">
+                    {% for i in students %}
+                    <option value="{{i.admin.id}}">
+                      ID{{i.id}}: {{i.admin.first_name}} {{i.admin.last_name}}
+                    </option>
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+
+              <div class="col-12 col-sm-6" id="profupdate">
+                <div class="form-group">
+                  <label>Assignment Marks</label>
+                  <input type="number" class="form-control form-select" name="assignment_mark"/>
+                </div>
+              </div>
+              <div class="col-12 col-sm-6" id="profupdate">
+                <div class="form-group">
+                  <label>Exam Marks</label>
+                  <input type="number" class="form-control form-select" name="exam_mark" />
+                </div>
+              </div>
+              
+              <div class="col-12 text-center">
+                <button type="submit" class="btn btn-primary">Add Result</button>
+              </div>
+            </div>
+            <hr />
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+  {% endif %}
+</div>
+
+{% endblock %}

@@ -17,17 +17,14 @@
               <li class="breadcrumb-item active">Take Attendance</li>
            </ul>
         </div>
-        <div class="col-auto text-right float-right ml-auto">
-           <!-- <a href="#" class="btn btn-outline-primary mr-2"><i class="fas fa-download"></i> Download</a> -->
-           <a href="" class="btn btn-primary"><i class="fas fa-plus" title="Add Subject"></i></a>
-        </div>
      </div>
   </div>
 <div class="row">
     <div class="col-sm-12">
       <div class="card">
         <div class="card-body row justify-content-center">
-          <form method="post" action="?action=get_student">
+          {% if action is None %}
+          <form action="?action=get_student" method="post" >
               {% csrf_token %}
             <div class="col-12">
               <h5 class="form-title text-center"><span>Take Attendance</span></h5>
@@ -62,6 +59,52 @@
               <button type="submit" class="btn btn-primary">Fetch Students</button>
             </div>
           </form>
+          {% else %}
+          <form method="post" action="{% url 'staff_save_attendance' %}">
+            {% csrf_token %}
+          <div class="col-12">
+            <h5 class="form-title text-center"><span>Take Attendance</span></h5>
+          </div>
+          <!--Added Messsages  -->
+          {% include 'includes/messages.html' %}
+
+          <div class="col-12 col-sm-6" id="profupdate">
+              <div class="form-group">
+                  <label>Subject</label>
+                  <select class="form-control form-select" name="subject_id" required>
+                     <option value="{{get_subject.id}}">{{get_subject}}</option>
+                  </select>
+              </div>
+          </div>
+          <div class="col-12 col-sm-6" id="profupdate">
+              <div class="form-group">
+                  <label>Session Year</label>
+                  <select class="form-control form-select" name="session_year_id" required>
+                     <option value="{{get_session_year.id}}">{{get_session_year}}</option>  
+                  </select>
+              </div>
+          </div>
+
+          <div class="col-12 col-sm-6" id="profupdate">
+            <div class="form-group">
+              <label>Attendance Date</label>
+              <input type="date" class="form-control" name="attendance_date" required/>
+            </div>
+          </div>
+          {% for student in students %}
+          <div class="col-12 col-sm-6 form-check" id="profupdate">
+            <div class="form-group form-check">
+              <input type="checkbox" class="form-check-input" value="{{student.id}}"  name="student_id">
+              <label class="form-check-label" for="exampleCheck1">{{student.admin.first_name}} {{student.admin.last_name}}</label>
+            </div>
+          </div>
+          {% endfor %}
+          
+          <div class="col-12 text-center">
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
+        </form>
+          {% endif  %}
         </div>
       </div>
     </div>
